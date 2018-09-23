@@ -1,39 +1,47 @@
-forearm_upper = [0; 200; 0];
-forearm_lower = [0; 200; 0];
+ValkArm = robotics.RigidBodyTree;
 
-s = 100; % step count
+bLink1 = robotics.RigidBody('bLink1');
+bLink2 = robotics.RigidBody('bLink2');
+link1 = robotics.RigidBody('link1');
+link2 = robotics.RigidBody('link2');
+link3 = robotics.RigidBody('link3');
+linkE = robotics.RigidBody('linkE'); % end effector
 
-roll_1 = linspace(-180, 180, s);
-pitch = linspace(-90, 90, s);
-roll_2 = linspace(-180, 180, s);
+len1 = 0.3;
+len2 = 0.03;
+len3 = 0.3;
 
-[roll_1, pitch, roll_2] = ndgrid(roll_1, pitch, roll_2);
+bAct1 = robotics.Joint('bLink1', 'fixed');
+bAct2 = robotics.Joint('bLink2', 'prismatic');
+act1 = robotics.Joint('link1', 'revolute');
+act2 = robotics.Joint('link2', 'revolute');
+act3 = robotics.Joint('link3', 'revolute');
+actE = robotics.Joint('linkE', 'fixed'); % end effector
 
-roll_1_mats = arrayfun(@(x) rotmat(x, [0 1 0]), roll_1, 'UniformOutput', false);
-pitch_mats = arrayfun(@(x) rotmat(x, [1 0 0]), pitch, 'UniformOutput', false);
+dhparams = [0   pi/2  0     pi;
+            0   0     0     0;
+            0   -pi/2 0     0;
+            0   pi/2  0     0;
+            0   0     len2  0;
+            0   0     len3  0];
 
-upper_pts = cell(s, s, s);
-[upper_pts{:}] = deal(forearm_upper);
+setFixedTransform(bAct1, dhparams(1,:), 'dh');
+setFixedTransform(bAct2, dhparams(2,:), 'dh');
+setFixedTransform(act1, dhparams(3,:), 'dh');
+setFixedTransform(act2, dhparams(4,:), 'dh');
+setFixedTransform(act3, dhparams(5,:), 'dh');
+setFixedTransform(actE, dhparams(6,:), 'dh');
 
-lower_pts = cell(s, s, s);
-[lower_pts{:}] = deal(forearm_lower);
+bLink1.Joint = bAct1;
+bLink2.Joint = bAct2;
+link1.Joint = act1;
+link2.Joint = act2;
+link3.Joint = act3;
+linkE.Joint = actE;
 
-lower_pts = cellfun(@mtimes, pitch_mats, lower_pts, 'UniformOutput', false);
-lower_pts = cellfun(@mtimes, roll_1_mats, lower_pts, 'UniformOutput', false);
-
-endpts = cellfun(@plus, upper_pts, lower_pts, 'UniformOutput', false);
-
-X = cellfun(@(x) x(1), endpts);
-X = reshape(X, [], 1);
-
-Y = cellfun(@(x) x(2), endpts);
-Y = reshape(Y, [], 1);
-
-Z = cellfun(@(x) x(3), endpts);
-Z = reshape(Z, [], 1);
-
-scatter3(X, Y, Z, 'k.');
-xlabel('x');
-ylabel('y');
-zlabel('z');
-axis('equal');
+addBody(ValkArm, bLink1, 'base');
+addBody(ValkArm, bLink2, 'bLink1');
+addBody(ValkArm, link1, 'bLink2');
+addBody(ValkArm, link2, 'link1');
+addBody(ValkArm, link3, 'link2');
+addBody(ValkArm, linkE, 'link3');
