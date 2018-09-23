@@ -1,8 +1,4 @@
-len1 = 0.3;
-len2 = 0.1;
-len3 = 0.3;
-
-current_arm();
+def_rpy();
 
 config = struct('JointName', [], 'JointPosition', []);
 
@@ -15,5 +11,12 @@ config(1).JointPosition = 0.05 + bAct2.HomePosition;
 config(2).JointPosition = 0 + act1.HomePosition;
 config(3).JointPosition = deg2rad(10) + act2.HomePosition;
 config(4).JointPosition = deg2rad(10) + act3.HomePosition;
+
+%config(1).JointPosition = 0;
+%config(2).JointPosition = act1.PositionLimits(1);
+%config(3).JointPosition = act2.PositionLimits(1);
+%config(4).JointPosition = act3.PositionLimits(1);
+
+%config = ValkArm.homeConfiguration;
 
 show(ValkArm, config);

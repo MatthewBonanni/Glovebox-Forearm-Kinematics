@@ -1,8 +1,8 @@
-ValkArm = robotics.RigidBodyTree;
+function [ValkArm] = def_rpr(lens)
+%DEF_RPR Model definition of RPR robotic arm
+%   lens - array of link lengths
 
-len1 = 0.3;
-len2 = 0.03;
-len3 = 0.3;
+ValkArm = robotics.RigidBodyTree;
 
 bLink1 = robotics.RigidBody('bLink1');
 bLink2 = robotics.RigidBody('bLink2');
@@ -23,17 +23,17 @@ act1.HomePosition = 0;
 act2.HomePosition = 0;
 act3.HomePosition = 0;
 
-bAct2.PositionLimits = bAct2.HomePosition + [-(len1 + len2 + len3) 0.5];
+bAct2.PositionLimits = bAct2.HomePosition + [-(lens(1) + lens(2) + lens(3)) 0.5];
 act1.PositionLimits = act1.HomePosition + [-pi pi];
 act2.PositionLimits = act2.HomePosition + [-pi/2 pi/2];
 act3.PositionLimits = act3.HomePosition + [-pi pi];
 
 dhparams = [0   pi/2  0     pi;
             0   0     0     pi/2;
-            0   -pi/2 len1     0;
+            0   -pi/2 lens(1)     0;
             0   pi/2  0     0;
-            0   0     len2  0;
-            0   0     len3  0];
+            0   0     lens(2)  0;
+            0   0     lens(3)  0];
 
 setFixedTransform(bAct1, dhparams(1,:), 'dh');
 setFixedTransform(bAct2, dhparams(2,:), 'dh');
@@ -55,3 +55,5 @@ addBody(ValkArm, link1, 'bLink2');
 addBody(ValkArm, link2, 'link1');
 addBody(ValkArm, link3, 'link2');
 addBody(ValkArm, linkE, 'link3');
+
+end

@@ -1,6 +1,13 @@
-def_old();
+function [endpts, bound, vol] = mobility(ValkArm)
+%MOBILITY Compute mobility of given arm model
+%   ValkArm - RigidBodyTree model of arm
 
 resolution = 20;
+
+bAct2 = ValkArm.Bodies{2}.Joint;
+act1 = ValkArm.Bodies{3}.Joint;
+act2 = ValkArm.Bodies{4}.Joint;
+act3 = ValkArm.Bodies{5}.Joint;
 
 bAct2_pos = linspace(bAct2.PositionLimits(1), ...
                      bAct2.PositionLimits(2), ...
@@ -24,7 +31,7 @@ config(4).JointName = 'link3';
 
 endpts = [];
 
-for i = 1:length(bAct2_pos)
+for i = 1:1
     %config(1).JointPosition = bAct2_pos(i);
     config(1).JointPosition = 0;
     
@@ -34,20 +41,19 @@ for i = 1:length(bAct2_pos)
         for k = 1:length(act2_pos)
             config(3).JointPosition = act2_pos(k);
             
-            % This joint only affects orientation of end effector -
-            % ignoring for now
-            config(4).JointPosition = act3_pos(1);
-            
-            % Calculate transform matrix
-            tform = getTransform(ValkArm, config, 'linkE', 'base');
-            
-            % Add endpoint to array
-            endpts = cat(1, endpts, tform2trvec(tform));
+            for l = 1:length(act3_pos)
+                config(4).JointPosition = act3_pos(l);
+                
+                % Calculate transform matrix
+                tform = getTransform(ValkArm, config, 'linkE', 'base');
+                
+                % Add endpoint to array
+                endpts = cat(1, endpts, tform2trvec(tform));
+            end
         end
     end
 end
 
-plot_range;
+[bound, vol] = boundary(endpts);
 
-%showdetails(ValkArm);
-%show(ValkArm, config);
+end
