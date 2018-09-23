@@ -1,9 +1,4 @@
-arm_def();
-
-bAct2.PositionLimits = [-0.5 0.5];
-act1.PositionLimits = [-pi pi];
-act2.PositionLimits = [-pi/2 pi/2];
-act3.PositionLimits = [-pi pi];
+def_old();
 
 resolution = 20;
 
@@ -30,7 +25,8 @@ config(4).JointName = 'link3';
 endpts = [];
 
 for i = 1:length(bAct2_pos)
-    config(1).JointPosition = bAct2_pos(i);
+    %config(1).JointPosition = bAct2_pos(i);
+    config(1).JointPosition = 0;
     
     for j = 1:length(act1_pos)
         config(2).JointPosition = act1_pos(j);
@@ -51,7 +47,7 @@ for i = 1:length(bAct2_pos)
     end
 end
 
-scatter3(endpts(:,1), endpts(:,2), endpts(:,3), 'k.')
+plot_range;
 
 %showdetails(ValkArm);
 %show(ValkArm, config);
