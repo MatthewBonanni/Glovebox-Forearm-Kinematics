@@ -17,8 +17,8 @@ disp(strcat("RPY envelope volume: ", num2str(vol_rpy * 10^6), " cm^3"))
 lens_old = [0.23 0 0.07];
 ValkArm_old = def_old(lens_old);
 [endpts_old, bound_old, vol_old] = mobility(ValkArm_old);
-disp("DONE: OLD");
-disp(strcat("OLD envelope volume: ", num2str(vol_old * 10^6), " cm^3"))
+disp("DONE: Old");
+disp(strcat("Old envelope volume: ", num2str(vol_old * 10^6), " cm^3"))
 
 %% Plot output
 
