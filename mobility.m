@@ -1,5 +1,5 @@
-function [endpts, bound, vol] = mobility(ValkArm)
-%MOBILITY Compute mobility of given arm model
+function [endpts, bound, vol] = mobility(ValkArm, box)
+%MOBILITY Compute mobility of given arm model in the given glove box
 %   ValkArm - RigidBodyTree model of arm
 
 resolution = 20;
@@ -31,9 +31,11 @@ config(4).JointName = 'link3';
 
 endpts = [];
 
-for i = 1:1
-    %config(1).JointPosition = bAct2_pos(i);
-    config(1).JointPosition = 0;
+f = waitbar(0, 'Computing mobility envelope...', 'Name', 'Progress');
+
+for i = 1:length(bAct2_pos)
+    config(1).JointPosition = bAct2_pos(i);
+    %config(1).JointPosition = 0;
     
     for j = 1:length(act1_pos)
         config(2).JointPosition = act1_pos(j);
@@ -52,8 +54,17 @@ for i = 1:1
             end
         end
     end
+    waitbar(i / resolution);
 end
 
-[bound, vol] = boundary(endpts);
+endpts = endpts(endpts(:,1) < (box.w/2 - box.x_collar),:); % remove points past side wall
+endpts = endpts(endpts(:,2) < box.d,:); % remove points past rear wall
+endpts = endpts(endpts(:,3) > -box.floor,:); % remove points below floor
+
+endpts(:,1) = endpts(:,1) + box.x_collar; % shift points to box opening
+
+[bound, vol] = boundary(endpts, 1); % determine boundary - maximum shrink
+
+delete(f);
 
 end

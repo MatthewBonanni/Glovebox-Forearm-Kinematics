@@ -1,30 +1,41 @@
 % MASTER SCRIPT
 
+%% Glove box parameters
+
+box.w = 1.16;
+box.h = 0.9;
+box.d = 0.74;
+box.floor = 0.15;
+box.x_collar = 0.3;
+box.r_collar = 0.1;
+
 %% Compute mobility for arm models
 
-lens_rpr = [0.3 0.03 0.3];
-ValkArm_rpr = def_rpr(lens_rpr);
-[endpts_rpr, bound_rpr, vol_rpr] = mobility(ValkArm_rpr);
+rpr.lens = [0.3 0.05 0.25];
+rpr.ValkArm = def_rpr(rpr.lens);
+[rpr.endpts, rpr.bound, rpr.vol] = mobility(rpr.ValkArm, box);
 disp("DONE: RPR");
-disp(strcat("RPR envelope volume: ", num2str(vol_rpr * 10^6), " cm^3"))
+disp(strcat("RPR envelope volume: ", num2str(rpr.vol * 10^6), " cm^3"))
 
-lens_rpy = [0.3 0.15 0.15];
-ValkArm_rpy = def_rpy(lens_rpy);
-[endpts_rpy, bound_rpy, vol_rpy] = mobility(ValkArm_rpy);
+rpy.lens = [0.3 0.15 0.15];
+rpy.ValkArm = def_rpy(rpy.lens);
+[rpy.endpts, rpy.bound, rpy.vol] = mobility(rpy.ValkArm, box);
 disp("DONE: RPY");
-disp(strcat("RPY envelope volume: ", num2str(vol_rpy * 10^6), " cm^3"))
+disp(strcat("RPY envelope volume: ", num2str(rpy.vol * 10^6), " cm^3"))
 
-lens_old = [0.23 0 0.07];
-ValkArm_old = def_old(lens_old);
-[endpts_old, bound_old, vol_old] = mobility(ValkArm_old);
+old.lens = [0.23 0 0.07];
+old.ValkArm = def_old(old.lens);
+[old.endpts, old.bound, old.vol] = mobility(old.ValkArm, box);
 disp("DONE: Old");
-disp(strcat("Old envelope volume: ", num2str(vol_old * 10^6), " cm^3"))
+disp(strcat("Old envelope volume: ", num2str(old.vol * 10^6), " cm^3"))
 
 %% Plot output
 
 figure(1);
-plot_range(endpts_rpr, bound_rpr);
+plot_range(rpr.endpts, rpr.bound, box);
 figure(2);
-plot_range(endpts_rpy, bound_rpy);
+plot_range(rpy.endpts, rpy.bound, box);
 figure(3);
-plot_range(endpts_old, bound_old);
+plot_range(old.endpts, old.bound, box);
+
+save('output.mat', 'box', 'old', 'rpr', 'rpy');
