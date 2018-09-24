@@ -1,8 +1,9 @@
 function [] = plot_range(endpts, bound, box)
 %PLOT_RANGE Visualize mobility range data
 
+figure();
+
 hold on;
-axis equal;
 
 %% Plot glovebox
 
@@ -20,7 +21,17 @@ fill3(x, y, z, 'black', 'FaceAlpha', 0.1);    % draw cube
 
 %% Plot envelopes
 
-trisurf(bound, endpts(:,1), endpts(:,2), endpts(:,3), 'Facecolor','red','FaceAlpha',0.3);
-trisurf(bound, -endpts(:,1), endpts(:,2), endpts(:,3), 'Facecolor','blue','FaceAlpha',0.3);
+trisurf(bound, endpts(:,1), endpts(:,2), endpts(:,3), ...
+        'Facecolor', 'blue', ...
+        'FaceAlpha', 0.5, ...
+        'EdgeAlpha', 0.6);
+trisurf(bound, -endpts(:,1), endpts(:,2), endpts(:,3), ...
+        'Facecolor', 'blue', ...
+        'FaceAlpha', 0.5, ...
+        'EdgeAlpha', 0.6);
+
+view(37.5, 30);
+axis equal;
+set(gcf, 'Position', [0 0 1000 1000]);
 
 end
