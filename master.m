@@ -3,8 +3,8 @@
 %% Glove box parameters
 
 box.w = 1.16;
-box.h = 0.9;
 box.d = 0.74;
+box.h = 0.9;
 box.floor = 0.15;
 box.x_collar = 0.3;
 box.r_collar = 0.1;
