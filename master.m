@@ -32,10 +32,10 @@ disp(strcat("Old envelope volume: ", num2str(old.vol * 10^6), " cm^3"))
 %% Plot output
 
 plot_range(rpr.endpts, rpr.bound, box);
-saveas(gcf, 'mobility_rpr.png');
+saveas(gcf, 'output/mobility_rpr.png');
 plot_range(rpy.endpts, rpy.bound, box);
-saveas(gcf, 'mobility_rpy.png');
+saveas(gcf, 'output/mobility_rpy.png');
 plot_range(old.endpts, old.bound, box);
-saveas(gcf, 'mobility_old.png');
+saveas(gcf, 'output/mobility_old.png');
 
 save('output.mat', 'box', 'old', 'rpr', 'rpy');
