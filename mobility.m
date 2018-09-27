@@ -59,6 +59,6 @@ endpts = endpts(endpts(:,3) > -box.floor,:); % remove points below floor
 
 endpts(:,1) = endpts(:,1) + box.x_collar; % shift points to box opening
 
-[bound, vol] = boundary(endpts, 1); % determine boundary - maximum shrink
+[bound, vol] = boundary(endpts, 0.8); % determine boundary - maximum shrink
 
 end

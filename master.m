@@ -11,13 +11,13 @@ box.r_collar = 0.1;
 
 %% Compute mobility for arm models
 
-rpr.lens = [0.3 0.05 0.25];
+rpr.lens = [0.155 0.05 0.163];
 rpr.ValkArm = def_rpr(rpr.lens);
 [rpr.endpts, rpr.bound, rpr.vol] = mobility(rpr.ValkArm, box);
 disp("DONE: RPR");
 disp(strcat("RPR envelope volume: ", num2str(rpr.vol * 10^6), " cm^3"))
 
-rpy.lens = [0.3 0.15 0.15];
+rpy.lens = [0.155 0.05 0.163];
 rpy.ValkArm = def_rpy(rpy.lens);
 [rpy.endpts, rpy.bound, rpy.vol] = mobility(rpy.ValkArm, box);
 disp("DONE: RPY");
@@ -38,4 +38,4 @@ saveas(gcf, 'output/mobility_rpy.png');
 plot_range(old.endpts, old.bound, box);
 saveas(gcf, 'output/mobility_old.png');
 
-save('output.mat', 'box', 'old', 'rpr', 'rpy');
+save('output/output.mat', 'box', 'old', 'rpr', 'rpy');
