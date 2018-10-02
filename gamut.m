@@ -1,8 +1,8 @@
-function [endpts, bound, vol] = mobility(ValkArm, box)
+function [endpts, bound, vol] = gamut(ValkArm, box)
 %MOBILITY Compute mobility of given arm model in the given glove box
 %   ValkArm - RigidBodyTree model of arm
 
-resolution = 20;
+resolution = 10;
 
 % Determine which joints are non-fixed
 acts = cellfun(@(x) ~strcmp(x.Joint.Type, 'fixed'), ValkArm.Bodies);
