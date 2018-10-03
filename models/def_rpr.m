@@ -29,7 +29,7 @@ act1.HomePosition = -pi/2;
 act2.HomePosition = 0;
 act3.HomePosition = 0;
 
-bAct2.PositionLimits = bAct2.HomePosition + [-lens(1) 0.5];
+bAct2.PositionLimits = bAct2.HomePosition + [-sum(lens) 0.5];
 bAct3.PositionLimits = bAct3.HomePosition + [-pi/2 pi/2];
 bAct4.PositionLimits = bAct4.HomePosition + [-pi/2 pi/2];
 act1.PositionLimits = act1.HomePosition + [-pi pi];

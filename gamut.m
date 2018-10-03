@@ -1,11 +1,11 @@
-function [endpts, bound, vol] = gamut(ValkArm, box)
-%MOBILITY Compute mobility of given arm model in the given glove box
-%   ValkArm - RigidBodyTree model of arm
+function [endpts, bound, vol] = gamut(arm, gbox, resolution)
+%GAMUT Compute gamut of given arm model in the given glove gbox
+%   arm - ValkArm model of robotic arm
 
-resolution = 10;
+rbt = arm.rbt;
 
 % Determine which joints are non-fixed
-acts = cellfun(@(x) ~strcmp(x.Joint.Type, 'fixed'), ValkArm.Bodies);
+acts = cellfun(@(x) ~strcmp(x.Joint.Type, 'fixed'), rbt.Bodies);
 
 numActs = sum(acts);
 
@@ -13,11 +13,11 @@ numActs = sum(acts);
 posArrays = cellfun(@(x) linspace(x.Joint.PositionLimits(1), ...
                                   x.Joint.PositionLimits(2), ...
                                   resolution), ...
-                    ValkArm.Bodies(acts), 'UniformOutput', false);
+                    rbt.Bodies(acts), 'UniformOutput', false);
 
 % Create config and fill joint names
 config = cell2struct(cellfun(@(x) x.Joint.Name, ...
-                             ValkArm.Bodies(acts), ...
+                             rbt.Bodies(acts), ...
                              'UniformOutput', false), ...
                      'JointName', 1)';
 
@@ -34,11 +34,14 @@ while ~all(pos == resolution)
     end
     
     % Calculate transform matrix
-    tform = getTransform(ValkArm, config, 'linkE', 'base');
+    tform = getTransform(rbt, config, 'linkE', 'base');
     
-    % Add endpoint to array
-    endpts = cat(1, endpts, tform2trvec(tform));
+    % If no conflict with gbox, add endpoint to list
+    if ~collision(arm, config, gbox)
+        endpts = cat(1, endpts, tform2trvec(tform));
+    end
     
+    disp(pos);
     pos = count_pos(pos);
 end
 
@@ -53,11 +56,7 @@ function posOut = count_pos(posIn)
     end
 end
 
-endpts = endpts(endpts(:,1) < (box.w/2 - box.x_collar),:); % remove points past side wall
-endpts = endpts(endpts(:,2) < box.d,:); % remove points past rear wall
-endpts = endpts(endpts(:,3) > -box.floor,:); % remove points below floor
-
-endpts(:,1) = endpts(:,1) + box.x_collar; % shift points to box opening
+endpts(:,1) = endpts(:,1) + gbox.x_collar; % shift points to gbox opening
 
 [bound, vol] = boundary(endpts, 0.8); % determine boundary - maximum shrink
 
