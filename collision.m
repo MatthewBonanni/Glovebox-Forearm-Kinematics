@@ -63,21 +63,6 @@ if r_total > gbox.d_collar / 2
     return
 end
 
-%% Check whether endpoint is outside box
-
-endpt = tform2trvec(getTransform(arm.rbt, config, 'linkE', 'base'));
-
-if endpt(1) > (gbox.w / 2) - gbox.x_collar % remove points past side wall
-    flag = 1;
-    return
-elseif endpt(2) > gbox.d % remove points past rear wall
-    flag = 1;
-    return
-elseif endpt(3) < -gbox.floor % remove points below floor
-    flag = 1;
-    return
-else
-    flag = 0;
-end
+flag = 0;
 
 end

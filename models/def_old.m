@@ -36,14 +36,14 @@ act1.PositionLimits = act1.HomePosition + [-pi pi];
 act2.PositionLimits = act2.HomePosition + [deg2rad(-17) deg2rad(17)];
 act3.PositionLimits = act3.HomePosition + [deg2rad(-17) deg2rad(17)];
 
-dhparams = [0        pi/2  0       pi;
-            0        pi/2  0      -pi/2;
-            0        pi/2  0       0;
-            0       -pi/2  0       0;
-            0       -pi/2  lens(1) 0;
-            lens(2) -pi/2  0       0;
-            lens(3)  pi/2  0       0;
-            0        0     0       0];
+dhparams = [0        pi/2  0        pi;
+            0        pi/2  0       -pi/2;
+            0        pi/2  0        0;
+            0       -pi/2  0        0;
+            0       -pi/2  lens(1)  0;
+            lens(2) -pi/2  0        0;
+            lens(3)  pi/2  0        0;
+            0        0     0        0];
 
 setFixedTransform(bAct1, dhparams(1,:), 'dh');
 setFixedTransform(bAct2, dhparams(2,:), 'dh');

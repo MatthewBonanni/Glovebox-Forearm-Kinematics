@@ -24,9 +24,12 @@ config = cell2struct(cellfun(@(x) x.Joint.Name, ...
 pos = ones(1, numActs);
 
 endpts = [];
+is_end = 0;
 
 % Loop through all positions
-while ~all(pos == resolution)
+while ~is_end
+    
+    disp(pos);
     
     % Set all joint positions
     for i = 1:numActs
@@ -41,8 +44,11 @@ while ~all(pos == resolution)
         endpts = cat(1, endpts, tform2trvec(tform));
     end
     
-    disp(pos);
-    pos = count_pos(pos);
+    is_end = all(pos == resolution);
+    
+    if ~is_end
+        pos = count_pos(pos);
+    end
 end
 
 function posOut = count_pos(posIn)
@@ -56,8 +62,24 @@ function posOut = count_pos(posIn)
     end
 end
 
+theta_res = 3 * resolution;
+rot_endpts = endpts;
+
+for i = 1:(theta_res - 1)
+    theta = (pi / theta_res) * i;
+    rotm = axang2rotm([0 1 0 theta]);
+    rot_endpts = cat(1, rot_endpts, endpts * rotm);
+end
+
+endpts = rot_endpts;
+
 endpts(:,1) = endpts(:,1) + gbox.x_collar; % shift points to gbox opening
 
-[bound, vol] = boundary(endpts, 0.8); % determine boundary - maximum shrink
+endpts = endpts(endpts(:,1) < gbox.w/2,:); % remove points past side wall
+endpts = endpts(endpts(:,2) > 0,:); % remove points behind front wall
+endpts = endpts(endpts(:,2) < gbox.d,:); % remove points past rear wall
+endpts = endpts(endpts(:,3) > -gbox.floor,:); % remove points below floor
+
+[bound, vol] = boundary(endpts, 0.7); % determine boundary - maximum shrink
 
 end
