@@ -1,19 +1,19 @@
-function [] = plot_range(endpts, bound, box)
+function [] = plot_range(endpts, bound, gbox)
 %PLOT_RANGE Visualize mobility range data
 
 figure();
 
 hold on;
 
-%% Plot glovebox
+%% Plot glovegbox
 
 x = [0 0 0 0 0 1; 1 0 1 1 1 1; 1 0 1 1 1 1; 0 0 0 0 0 1];
 y = [0 0 0 0 1 0; 0 1 0 0 1 1; 0 1 1 1 1 1; 0 0 1 1 1 0];
 z = [0 0 1 0 0 0; 0 0 1 0 0 0; 1 1 1 0 1 1; 1 1 1 0 1 1];
 
-x = box.w * (x - 0.5) + 0;
-y = box.d * (y - 0.5) + box.d/2;
-z = box.h * (z - 0.5) + box.h/2 - box.floor;
+x = gbox.w * (x - 0.5) + 0;
+y = gbox.d * (y - 0.5) + gbox.d/2;
+z = gbox.h * (z - 0.5) + gbox.h/2 - gbox.floor;
 
 fill3(x, y, z, 'black', 'FaceAlpha', 0.1);    % draw cube
 

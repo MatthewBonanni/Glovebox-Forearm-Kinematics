@@ -29,21 +29,21 @@ act1.HomePosition = -pi/2;
 act2.HomePosition = 0;
 act3.HomePosition = 0;
 
-bAct2.PositionLimits = bAct2.HomePosition + [-lens(1) 0.5];
+bAct2.PositionLimits = bAct2.HomePosition + [-sum(lens) 0];
 bAct3.PositionLimits = bAct3.HomePosition + [-pi/2 pi/2];
 bAct4.PositionLimits = bAct4.HomePosition + [-pi/2 pi/2];
 act1.PositionLimits = act1.HomePosition + [-pi pi];
 act2.PositionLimits = act2.HomePosition + [-pi/2 pi/2];
 act3.PositionLimits = act3.HomePosition + [-pi pi];
 
-dhparams = [0   pi/2  0       pi;
-            0   pi/2  0      -pi/2;
-            0   pi/2  0       0;
-            0  -pi/2  0       0;
-            0  -pi/2  lens(1) 0;
-            0   pi/2  0       pi/2;
-            0   0     lens(2) 0;
-            0   0     lens(3) 0];
+dhparams = [0  pi/2  0        pi;
+            0  pi/2  0       -pi/2;
+            0  pi/2  0        0;
+            0 -pi/2  0        0;
+            0 -pi/2  lens(1)  0;
+            0  pi/2  0        pi/2;
+            0  0     lens(2)  0;
+            0  0     lens(3)  0];
 
 setFixedTransform(bAct1, dhparams(1,:), 'dh');
 setFixedTransform(bAct2, dhparams(2,:), 'dh');
