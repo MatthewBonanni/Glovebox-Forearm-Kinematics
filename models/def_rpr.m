@@ -40,10 +40,10 @@ dhparams = [0  pi/2  0        pi;
             0  pi/2  0       -pi/2;
             0  pi/2  0        0;
             0 -pi/2  0        0;
-            0 -pi/2  lens(1)  0;
+            0 -pi/2  lens(5)  0;
             0  pi/2  0        pi/2;
-            0  0     lens(2)  0;
-            0  0     lens(3)  0];
+            0  0     lens(7)  0;
+            0  0     lens(8)  0];
 
 setFixedTransform(bAct1, dhparams(1,:), 'dh');
 setFixedTransform(bAct2, dhparams(2,:), 'dh');

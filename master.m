@@ -16,7 +16,7 @@ gbox.t_collar = 0.02;
 
 disp("Calculating RPR Gamut...");
 rpr = ValkArm;
-rpr.lens = [0.155 0.05 0.163];
+rpr.lens = [0 0 0 0 0.155 0 0.05 0.163];
 rpr.dias = [0 0 0 0 0.135 0 0.135 0.135];
 rpr.rbt = def_rpr_red(rpr.lens);
 [rpr.endpts, rpr.bound, rpr.vol] = gamut(rpr, gbox, resolution);
@@ -27,7 +27,7 @@ disp("");
 
 disp("Calculating RPY Gamut...");
 rpy = ValkArm;
-rpy.lens = [0.155 0.05 0.163];
+rpy.lens = [0 0 0 0 0.155 0 0.05 0.163];
 rpy.dias = [0 0 0 0 0.135 0 0.135 0.135];
 rpy.rbt = def_rpy_red(rpy.lens);
 [rpy.endpts, rpy.bound, rpy.vol] = gamut(rpy, gbox, resolution);
@@ -38,7 +38,7 @@ disp("");
 
 disp("Calculating Old Gamut...");
 old = ValkArm;
-old.lens = [0.23 0 0.07];
+old.lens = [0 0 0 0 0.23 0 0 0.07];
 old.dias = [0 0 0 0 0.135 0 0 0.09];
 old.rbt = def_old_red(old.lens);
 [old.endpts, old.bound, old.vol] = gamut(old, gbox, resolution);
