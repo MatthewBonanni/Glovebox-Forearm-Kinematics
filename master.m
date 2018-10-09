@@ -1,6 +1,9 @@
 % MASTER SCRIPT
 
-resolution = 10;
+addpath("models", "output");
+
+resolution = 10; % step count
+red = 1; % reduced complexity models
 
 %% Glove gbox parameters
 
@@ -16,9 +19,10 @@ gbox.t_collar = 0.02;
 
 disp("Calculating RPR Gamut...");
 rpr = ValkArm;
-rpr.lens = [0 0 0 0 0.155 0 0.05 0.163];
-rpr.dias = [0 0 0 0 0.135 0 0.135 0.135];
-rpr.rbt = def_rpr_red(rpr.lens);
+rpr.red = red;
+rpr.lens = [0 0 0 0 0.155 0 0.050 0.163];
+rpr.dias = [0 0 0 0 0.100 0 0.100 0.100];
+rpr.rbt = def_rpr(rpr.lens, rpr.red);
 [rpr.endpts, rpr.bound, rpr.vol] = gamut(rpr, gbox, resolution);
 disp("DONE: RPR");
 disp(strcat("RPR envelope volume: ", num2str(rpr.vol * 10^6), " cm^3"))
@@ -27,9 +31,10 @@ disp("");
 
 disp("Calculating RPY Gamut...");
 rpy = ValkArm;
-rpy.lens = [0 0 0 0 0.155 0 0.05 0.163];
-rpy.dias = [0 0 0 0 0.135 0 0.135 0.135];
-rpy.rbt = def_rpy_red(rpy.lens);
+rpy.red = red;
+rpy.lens = [0 0 0 0 0.155 0 0.050 0.163];
+rpy.dias = [0 0 0 0 0.100 0 0.100 0.100];
+rpy.rbt = def_rpy(rpy.lens, rpy.red);
 [rpy.endpts, rpy.bound, rpy.vol] = gamut(rpy, gbox, resolution);
 disp("DONE: RPY");
 disp(strcat("RPY envelope volume: ", num2str(rpy.vol * 10^6), " cm^3"))
@@ -38,20 +43,21 @@ disp("");
 
 disp("Calculating Old Gamut...");
 old = ValkArm;
+old.red = red;
 old.lens = [0 0 0 0 0.23 0 0 0.07];
 old.dias = [0 0 0 0 0.135 0 0 0.09];
-old.rbt = def_old_red(old.lens);
+old.rbt = def_old(old.lens, old.red);
 [old.endpts, old.bound, old.vol] = gamut(old, gbox, resolution);
 disp("DONE: Old");
 disp(strcat("Old envelope volume: ", num2str(old.vol * 10^6), " cm^3"))
 
 %% Plot output
 
-plot_range(rpr.endpts, rpr.bound, gbox);
+plot_gamut(rpr.endpts, rpr.bound, gbox);
 saveas(gcf, 'output/gamut_rpr.png');
-plot_range(rpy.endpts, rpy.bound, gbox);
+plot_gamut(rpy.endpts, rpy.bound, gbox);
 saveas(gcf, 'output/gamut_rpy.png');
-plot_range(old.endpts, old.bound, gbox);
+plot_gamut(old.endpts, old.bound, gbox);
 saveas(gcf, 'output/gamut_old.png');
 
 save('output/output.mat', 'gbox', 'old', 'rpr', 'rpy');

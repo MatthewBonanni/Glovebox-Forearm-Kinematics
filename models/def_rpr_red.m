@@ -29,12 +29,16 @@ bAct3.HomePosition = -pi/2;
 act2.HomePosition = 0;
 % act3.HomePosition = 0;
 
-bAct2.PositionLimits = bAct2.HomePosition + [-sum(lens) 0];
-bAct3.PositionLimits = bAct3.HomePosition + [-pi/2 pi/2];
+% bAct2.PositionLimits = bAct2.HomePosition + [-sum(lens) 0];
+% bAct3.PositionLimits = bAct3.HomePosition + [-pi/2 pi/2];
 % bAct4.PositionLimits = bAct4.HomePosition + [-pi/2 pi/2];
 % act1.PositionLimits = act1.HomePosition + [-pi pi];
-act2.PositionLimits = act2.HomePosition + [-pi/2 pi/2];
+% act2.PositionLimits = act2.HomePosition + [-pi/2 pi/2];
 % act3.PositionLimits = act3.HomePosition + [-pi pi];
+
+bAct2.PositionLimits = bAct2.HomePosition + [-sum(lens) 0];
+bAct3.PositionLimits = bAct3.HomePosition + [0 pi/2];
+act2.PositionLimits = act2.HomePosition + [0 pi/2];
 
 dhparams = [0  pi/2  0        pi;
             0  pi/2  0       -pi/2;

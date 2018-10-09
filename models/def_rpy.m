@@ -1,4 +1,4 @@
-function [ValkArm] = def_rpy(lens)
+function [ValkArm] = def_rpy(lens, red)
 %DEF_RPY Model definition of RPY robotic arm
 %   lens - array of link lengths
 
@@ -13,34 +13,53 @@ link2 = robotics.RigidBody('link2');
 link3 = robotics.RigidBody('link3');
 linkE = robotics.RigidBody('linkE'); % end effector
 
-bAct1 = robotics.Joint('bLink1', 'fixed');
-bAct2 = robotics.Joint('bLink2', 'prismatic');
-bAct3 = robotics.Joint('bLink3', 'revolute');
-bAct4 = robotics.Joint('bLink4', 'revolute');
-act1 = robotics.Joint('link1', 'revolute');
-act2 = robotics.Joint('link2', 'revolute');
-act3 = robotics.Joint('link3', 'revolute');
-actE = robotics.Joint('linkE', 'fixed'); % end effector
-
-bAct2.HomePosition = 0;
-bAct3.HomePosition = -pi/2;
-bAct4.HomePosition = pi/2;
-act1.HomePosition = -pi/2;
-act2.HomePosition = -pi/2;
-act3.HomePosition = 0;
-
-bAct2.PositionLimits = bAct2.HomePosition + [-sum(lens) 0];
-bAct3.PositionLimits = bAct3.HomePosition + [-pi/2 pi/2];
-bAct4.PositionLimits = bAct4.HomePosition + [-pi/2 pi/2];
-act1.PositionLimits = act1.HomePosition + [-pi pi];
-act2.PositionLimits = act2.HomePosition + [-pi/2 pi/2];
-act3.PositionLimits = act3.HomePosition + [-pi/2 pi/2];
+if red
+    bAct1 = robotics.Joint('bLink1', 'fixed');
+    bAct2 = robotics.Joint('bLink2', 'prismatic');
+    bAct3 = robotics.Joint('bLink3', 'revolute');
+    bAct4 = robotics.Joint('bLink4', 'fixed');
+    act1 = robotics.Joint('link1', 'fixed');
+    act2 = robotics.Joint('link2', 'revolute');
+    act3 = robotics.Joint('link3', 'fixed');
+    actE = robotics.Joint('linkE', 'fixed'); % end effector
+    
+    bAct2.HomePosition = 0;
+    bAct3.HomePosition = -pi/2;
+    act2.HomePosition = -pi/2;
+    
+    bAct2.PositionLimits = bAct2.HomePosition + [-sum(lens) 0];
+    bAct3.PositionLimits = bAct3.HomePosition + [0 pi/2];
+    act2.PositionLimits = act2.HomePosition + [0 pi/2];
+else
+    bAct1 = robotics.Joint('bLink1', 'fixed');
+    bAct2 = robotics.Joint('bLink2', 'prismatic');
+    bAct3 = robotics.Joint('bLink3', 'revolute');
+    bAct4 = robotics.Joint('bLink4', 'revolute');
+    act1 = robotics.Joint('link1', 'revolute');
+    act2 = robotics.Joint('link2', 'revolute');
+    act3 = robotics.Joint('link3', 'revolute');
+    actE = robotics.Joint('linkE', 'fixed'); % end effector
+    
+    bAct2.HomePosition = 0;
+    bAct3.HomePosition = -pi/2;
+    bAct4.HomePosition = pi/2;
+    act1.HomePosition = -pi/2;
+    act2.HomePosition = -pi/2;
+    act3.HomePosition = 0;
+    
+    bAct2.PositionLimits = bAct2.HomePosition + [-sum(lens) 0];
+    bAct3.PositionLimits = bAct3.HomePosition + [-pi/2 pi/2];
+    bAct4.PositionLimits = bAct4.HomePosition + [-pi/2 pi/2];
+    act1.PositionLimits = act1.HomePosition + [-pi pi];
+    act2.PositionLimits = act2.HomePosition + [-pi/2 pi/2];
+    act3.PositionLimits = act3.HomePosition + [-pi/2 pi/2];
+end
 
 dhparams = [0        pi/2  0        pi;
             0        pi/2  0       -pi/2;
             0        pi/2  0        0;
-            0       -pi/2  0        0;
-            0       -pi/2  lens(5)  0;
+            0       -pi/2  0        pi/2;
+            0       -pi/2  lens(5) -pi/2;
             lens(6) -pi/2  0        0;
             lens(7)  pi/2  0        0;
             0        0     0        0];

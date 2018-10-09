@@ -9,6 +9,7 @@ classdef ValkArm
         endpts
         bound
         vol
+        red
     end
     
     methods

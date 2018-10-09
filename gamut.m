@@ -62,11 +62,11 @@ function posOut = count_pos(posIn)
     end
 end
 
-theta_res = 3 * resolution;
+theta_res = 5 * resolution;
 rot_endpts = endpts;
 
 for i = 1:(theta_res - 1)
-    theta = (pi / theta_res) * i;
+    theta = (2 * pi / theta_res) * i;
     rotm = axang2rotm([0 1 0 theta]);
     rot_endpts = cat(1, rot_endpts, endpts * rotm);
 end
@@ -80,6 +80,6 @@ endpts = endpts(endpts(:,2) > 0,:); % remove points behind front wall
 endpts = endpts(endpts(:,2) < gbox.d,:); % remove points past rear wall
 endpts = endpts(endpts(:,3) > -gbox.floor,:); % remove points below floor
 
-[bound, vol] = boundary(endpts, 0.7); % determine boundary - maximum shrink
+[bound, vol] = boundary(endpts, 0.6); % determine boundary - maximum shrink
 
 end
