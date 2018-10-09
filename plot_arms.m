@@ -1,4 +1,4 @@
-function [] = plot_arm(arm, config, gbox)
+function [] = plot_arms(arm, config, gbox)
 %PLOT_ARM Visualize arm inside glovebox
 
 figure();
@@ -42,8 +42,6 @@ surf(collar.x, collar.y, collar.z, 'FaceColor', 'black');
 surf(-collar.x, collar.y, collar.z, 'FaceColor', 'black');
 
 %% Plot arm cylinders
-
-segments = [];
 
 for i = 5:length(arm.dias)
     

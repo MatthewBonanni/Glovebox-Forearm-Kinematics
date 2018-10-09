@@ -51,6 +51,28 @@ while ~is_end
     end
 end
 
+if arm.red
+    theta_res = 5 * resolution;
+    rot_endpts = endpts;
+    
+    for i = 1:(theta_res - 1)
+        theta = (2 * pi / theta_res) * i;
+        rotm = axang2rotm([0 1 0 theta]);
+        rot_endpts = cat(1, rot_endpts, endpts * rotm);
+    end
+    
+    endpts = rot_endpts;
+end
+
+endpts(:,1) = endpts(:,1) + gbox.x_collar; % shift points to gbox opening
+
+endpts = endpts(endpts(:,1) < gbox.w/2,:); % remove points past side wall
+endpts = endpts(endpts(:,2) > 0,:); % remove points behind front wall
+endpts = endpts(endpts(:,2) < gbox.d,:); % remove points past rear wall
+endpts = endpts(endpts(:,3) > -gbox.floor,:); % remove points below floor
+
+[bound, vol] = boundary(endpts, 0.6); % determine boundary - maximum shrink
+
 function posOut = count_pos(posIn)
     len = length(posIn);
     posOut = posIn;
@@ -61,25 +83,5 @@ function posOut = count_pos(posIn)
         posOut = [count_pos(posIn(1:len - 1)), 1];
     end
 end
-
-theta_res = 5 * resolution;
-rot_endpts = endpts;
-
-for i = 1:(theta_res - 1)
-    theta = (2 * pi / theta_res) * i;
-    rotm = axang2rotm([0 1 0 theta]);
-    rot_endpts = cat(1, rot_endpts, endpts * rotm);
-end
-
-endpts = rot_endpts;
-
-endpts(:,1) = endpts(:,1) + gbox.x_collar; % shift points to gbox opening
-
-endpts = endpts(endpts(:,1) < gbox.w/2,:); % remove points past side wall
-endpts = endpts(endpts(:,2) > 0,:); % remove points behind front wall
-endpts = endpts(endpts(:,2) < gbox.d,:); % remove points past rear wall
-endpts = endpts(endpts(:,3) > -gbox.floor,:); % remove points below floor
-
-[bound, vol] = boundary(endpts, 0.6); % determine boundary - maximum shrink
 
 end
