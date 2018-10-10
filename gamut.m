@@ -71,7 +71,7 @@ endpts = endpts(endpts(:,2) > 0,:); % remove points behind front wall
 endpts = endpts(endpts(:,2) < gbox.d,:); % remove points past rear wall
 endpts = endpts(endpts(:,3) > -gbox.floor,:); % remove points below floor
 
-[bound, vol] = boundary(endpts, 0.6); % determine boundary - maximum shrink
+[bound, vol] = boundary(endpts, 0.7); % determine boundary - maximum shrink
 
 function posOut = count_pos(posIn)
     len = length(posIn);

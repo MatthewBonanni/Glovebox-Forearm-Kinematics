@@ -87,6 +87,21 @@ for i = 5:length(arm.dias)
     surf(-x, y, z, 'FaceColor', 'blue');
 end
 
+%% Plot end effector sphere
+
+endPt = tform2trvec(getTransform(arm.rbt, config, 'linkE', 'base'));
+
+r = 0.04;
+
+[endEff.x, endEff.y, endEff.z] = sphere;
+
+endEff.x = r * endEff.x + endPt(1) + gbox.x_collar;
+endEff.y = r * endEff.y + endPt(2);
+endEff.z = r * endEff.z + endPt(3);
+
+surf(endEff.x, endEff.y, endEff.z, 'FaceColor', 'red');
+surf(-endEff.x, endEff.y, endEff.z, 'FaceColor', 'red');
+
 %% Misc. config
 
 view(37.5, 30);
