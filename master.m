@@ -2,7 +2,7 @@
 
 addpath("models", "output");
 
-resolution = 10; % step count
+resolution = 15; % step count
 red = 1; % reduced complexity models
 
 %% Glove gbox parameters
