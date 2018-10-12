@@ -20,7 +20,7 @@ gbox.t_collar = 0.02;
 disp("Calculating RPR Gamut...");
 rpr = ValkArm;
 rpr.red = red;
-rpr.lens = [0 0 0 0 0.155 0 0.050 0.163];
+rpr.lens = [0 0 0 0 0.155 0 0.082 0.250];
 rpr.dias = [0 0 0 0 0.100 0 0.100 0.100];
 rpr.rbt = def_rpr(rpr.lens, rpr.red);
 [rpr.endpts, rpr.bound, rpr.vol] = gamut(rpr, gbox, resolution);
@@ -28,18 +28,6 @@ disp("DONE: RPR");
 disp(strcat("RPR envelope volume: ", num2str(rpr.vol * 10^6), " cm^3"));
 
 disp("");
-
-% disp("Calculating RPY Gamut...");
-% rpy = ValkArm;
-% rpy.red = red;
-% rpy.lens = [0 0 0 0 0.155 0 0.050 0.163];
-% rpy.dias = [0 0 0 0 0.100 0 0.100 0.100];
-% rpy.rbt = def_rpy(rpy.lens, rpy.red);
-% [rpy.endpts, rpy.bound, rpy.vol] = gamut(rpy, gbox, resolution);
-% disp("DONE: RPY");
-% disp(strcat("RPY envelope volume: ", num2str(rpy.vol * 10^6), " cm^3"));
-% 
-% disp("");
 
 disp("Calculating Old Gamut...");
 old = ValkArm;
@@ -53,15 +41,13 @@ disp(strcat("Old envelope volume: ", num2str(old.vol * 10^6), " cm^3"));
 
 disp("");
 
-disp("Gamut improvement factor: ", num2str(rpr.vol / old.vol));
+disp(strcat("Gamut improvement factor: ", num2str(rpr.vol / old.vol)));
 
 %% Plot output
 
 plot_gamut(rpr.endpts, rpr.bound, gbox);
 saveas(gcf, 'output/gamut_rpr.png');
-plot_gamut(rpy.endpts, rpy.bound, gbox);
-saveas(gcf, 'output/gamut_rpy.png');
 plot_gamut(old.endpts, old.bound, gbox);
 saveas(gcf, 'output/gamut_old.png');
 
-save('output/output.mat', 'gbox', 'old', 'rpr', 'rpy');
+save('output/output.mat', 'gbox', 'old', 'rpr');

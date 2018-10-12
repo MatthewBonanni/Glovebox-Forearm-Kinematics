@@ -1,22 +1,22 @@
 g = 9.81; % m/s^2
-% ma = 0.62; % mass of actuator (kg)
-ml1 = 0.4; % mass of link 1 (kg)
-ml2 = 0.059; % mass of link 2 (kg)
-ml3 = 0.100; % mass of link 3 (kg)
-mh = 0.750; % mass of hand (kg)
-m = 0; % mass of carried load (kg)
-ma = 0.135 % kg
-ml1 = ml1*(1/3)*(0.4)
-ml2 = ml2*(1/3)*(0.4)
-ml3 = ml3*(1/3)*(0.4)
-link1 = 0.1+0.020
-link2 = 0.2
-linkh = 0.2
-l_arm = link1+link2+linkh
+% ma = 0.62; % mass of actuator
+ml1 = 0.4; % mass of link 1
+ml2 = 0.059; % mass of link 2
+ml3 = 0.100; % mass of link 3
+mh = 0.750; % mass of hand
+m = 0; % mass of carried load
+ma = 0.135; % kg
+ml1 = ml1*(1/3)*(0.4);
+ml2 = ml2*(1/3)*(0.4);
+ml3 = ml3*(1/3)*(0.4);
+link1 = 0.1+0.020;
+link2 = 0.2;
+linkh = 0.2;
+l_arm = link1+link2+linkh;
 
-m_arm = 3*ma+ml1+ml2+ml3+mh % mass of entire arm, not incl. load (kg)
+m_arm = 3*ma+ml1+ml2+ml3+mh; % mass of entire arm, not incl. load
 
-T_pitch = (link2/2)*g*ml2+(link2)*g*ma+(link2+linkh/2)*g*ml3+(link2+linkh/2)*g*ma+(link2+linkh)*g*mh
+T_pitch = (link2/2)*g*ml2+(link2)*g*ma+(link2+linkh/2)*g*ml3+(link2+linkh/2)*g*ma+(link2+linkh)*g*mh;
 
 % T_pitch_max = 11.4; % Max torque FHA-11C actuator can apply
 % Link 2 + Roll 2 + Link 3 + Hand + Carried Mass
