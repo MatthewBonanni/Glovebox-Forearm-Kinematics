@@ -12,14 +12,26 @@ for i = 2:arm.rbt.NumBodies
     % Point B: end of segment
     B = tform2trvec(getTransform(arm.rbt, config, arm.rbt.Bodies{i}.Name, 'base'));
     
-    y_limit = (gbox.t_collar / 2) + (arm.dias(i) / 2);
+    % Vector from A to B
+    delta = B - A;
+    
+    % Angle between arm axis and y axis
+    theta = acosd(dot(delta / norm(delta), [0 1 0]));
+    
+    % Edge of cylinder
+    s = (arm.dias(i) / 2) * sind(theta);
+    
+    cyl_aft = A(2) - s;
+    cyl_fwd = B(2) + s;
+    
+    y_limit = (gbox.t_collar / 2);
     
     if arm.lens(i) == 0
         continue
-    elseif A(2) >= y_limit % Arm is fully inside box
+    elseif cyl_aft >= y_limit % Arm is fully inside box
         flag = 0;
         return
-    elseif A(2) < y_limit && B(2) >= y_limit % Segment straddles collar
+    elseif cyl_aft < y_limit && cyl_fwd >= y_limit % Segment straddles collar
         break
     end
 end
@@ -31,13 +43,10 @@ end
 
 %% Determine whether arm intersects collar
 
-% Vector from A to B
-delta = B - A;
-
 % Point C: intersection of arm axis with outside plane of collar
-% C(2) = -gbox.t_collar / 2;
-% C(1) = (delta(1)/delta(2))*(C(2)-A(2)) + A(1);
-% C(3) = (delta(3)/delta(2))*(C(2)-A(2)) + A(3);
+C(2) = -gbox.t_collar / 2;
+C(1) = (delta(1)/delta(2))*(C(2)-A(2)) + A(1);
+C(3) = (delta(3)/delta(2))*(C(2)-A(2)) + A(3);
 
 % Point D: intersection of arm axis with inside plane of collar
 D(2) = gbox.t_collar / 2;
@@ -45,15 +54,11 @@ D(1) = (delta(1)/delta(2))*(D(2)-A(2)) + A(1);
 D(3) = (delta(3)/delta(2))*(D(2)-A(2)) + A(3);
 
 % r position of the arm axis at C and D
-% r_C = sqrt(C(1)^2 + C(3)^2);
+r_C = sqrt(C(1)^2 + C(3)^2);
 r_D = sqrt(D(1)^2 + D(3)^2);
 
 % Max of the two
-% r_axis = max(r_C, r_D);
-r_axis = r_D;
-
-% Angle between arm axis and y axis
-theta = acosd(dot(delta / norm(delta), [0 1 0]));
+r_axis = max(r_C, r_D);
 
 % Angle-adjusted radius of arm
 h = arm.dias(i) / (2 * cosd(theta));
