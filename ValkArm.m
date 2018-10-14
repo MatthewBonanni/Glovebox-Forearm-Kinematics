@@ -4,6 +4,7 @@ classdef ValkArm
     
     properties
         rbt
+        dhparams
         lens
         dias
         endpts

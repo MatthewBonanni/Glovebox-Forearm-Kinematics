@@ -1,11 +1,11 @@
-g = 9.81; % m/s^2
+g = 9.81;
 % ma = 0.62; % mass of actuator
 ml1 = 0.4; % mass of link 1
 ml2 = 0.059; % mass of link 2
 ml3 = 0.100; % mass of link 3
 mh = 0.750; % mass of hand
 m = 0; % mass of carried load
-ma = 0.135; % kg
+ma = 0.135;
 ml1 = ml1*(1/3)*(0.4);
 ml2 = ml2*(1/3)*(0.4);
 ml3 = ml3*(1/3)*(0.4);

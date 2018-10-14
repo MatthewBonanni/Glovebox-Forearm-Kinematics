@@ -47,7 +47,7 @@ while ~is_end
     is_end = all(pos == resolution);
     
     if ~is_end
-        pos = count_pos(pos);
+        pos = count_array(pos, resolution);
     end
 end
 
@@ -72,16 +72,5 @@ endpts = endpts(endpts(:,2) < gbox.d,:); % remove points past rear wall
 endpts = endpts(endpts(:,3) > -gbox.floor,:); % remove points below floor
 
 [bound, vol] = boundary(endpts, 0.7); % determine boundary - maximum shrink
-
-function posOut = count_pos(posIn)
-    len = length(posIn);
-    posOut = posIn;
-    
-    if posIn(len) < resolution
-        posOut(len) = posIn(len) + 1;
-    else
-        posOut = [count_pos(posIn(1:len - 1)), 1];
-    end
-end
 
 end
