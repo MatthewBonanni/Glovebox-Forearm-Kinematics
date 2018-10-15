@@ -7,5 +7,8 @@ It computes optimal geometric parameters for use in the team's effort to design 
 __Matthew R. Bonanni__  
 2018
 
-![Visualization of RPR Robotic Forearm in Glovebox](resources/rpr.png)
-![Mobility Visualization of RPY Robotic Forearm](resources/gamut.png)
+| Visualization of RPR Robotic Forearm in Glovebox | Gamut Visualization of RPR Robotic Forearm |
+|-|-|
+| ![arms](resources/rpr.png "Visualization of RPR Robotic Forearm in Glovebox") | ![gamut](resources/gamut.png "Gamut Visualization of RPR Robotic Forearm") |
+
+![optimization](resources/optimization.png "Optimization Surface of RPR Robotic Forearm")

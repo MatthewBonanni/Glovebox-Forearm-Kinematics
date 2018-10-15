@@ -50,4 +50,4 @@ saveas(gcf, 'output/gamut_rpr.png');
 plot_gamut(old.endpts, old.bound, gbox);
 saveas(gcf, 'output/gamut_old.png');
 
-save('output/output.mat', 'gbox', 'old', 'rpr');
+save('output/gamut_output.mat', 'gbox', 'old', 'rpr');
