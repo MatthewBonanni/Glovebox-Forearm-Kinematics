@@ -4,8 +4,6 @@ function flag = valid_lens(lens)
 
 g = 9.81;
 
-% Note: Assume len(2) fixed at 0.082
-
 elbowToPlate = 0.065;
 plateToAct1 = 0.05;
 YHbaseToPalm = 0.075;
