@@ -1,3 +1,5 @@
+addpath("models", "output");
+
 %% Glovebox parameters
 
 gbox.w = 1.16;
@@ -18,7 +20,7 @@ shrink = 0.5;
 %% Model physical parameters
 
 rpr = ValkArm;
-rpr.red = red;
+rpr.red = 1;
 rpr.dias = [0 0 0 0 0.100 0 0.100 0.100];
 
 len2 = 0.082;
@@ -37,7 +39,7 @@ currentLimits = lensLimits;
 currentSet = ones(1, length(lensLimits));
 
 paramSets = cell(1, zoomCount);
-vol = cell(1, zoomCount);
+wVol = cell(1, zoomCount);
 
 paramSets{1} = cellfun(@(x) linspace(x(1), x(2), res_optimization), ...
                        lensLimits, ...
@@ -54,7 +56,7 @@ for i = 1:zoomCount
     
     disp(strcat("Iteration: ", num2str(i)));
     
-    vol{i} = zeros(res_optimization, res_optimization);
+    wVol{i} = zeros(res_optimization, res_optimization);
     
     while ~is_end
         disp(currentSet);
@@ -62,13 +64,13 @@ for i = 1:zoomCount
         if ~valid_lens([paramSets{i}{1}(currentSet(1)), ...
                 len2, ...
                 paramSets{i}{2}(currentSet(2)) - len2])
-            vol{i}(currentSet(1), currentSet(2)) = NaN;
+            wVol{i}(currentSet(1), currentSet(2)) = NaN;
         else
             rpr.lens = [0 0 0 0 paramSets{i}{1}(currentSet(1)) ...
                 0 len2 paramSets{i}{2}(currentSet(2)) - len2];
             
             rpr.rbt = def_rpr(rpr.lens, rpr.red);
-            [~, ~, vol{i}(currentSet(1), currentSet(2))] = gamut(rpr, gbox, res_model);
+            [~, ~, ~, wVol{i}(currentSet(1), currentSet(2))] = gamut(rpr, gbox, res_model);
         end
         
         is_end = all(currentSet == res_optimization);
@@ -78,9 +80,9 @@ for i = 1:zoomCount
         end
     end
     
-    maxVolume = max(vol{i}(:));
+    maxwVolume = max(wVol{i}(:));
     
-    [iOpt(1), iOpt(2)] = find(vol{i} == maxVolume);
+    [iOpt(1), iOpt(2)] = find(wVol{i} == maxwVolume);
     
     opt = zeros(1, numParams);
     for j = 1:numParams
@@ -106,18 +108,19 @@ end
 
 for i = 1:zoomCount
     [X,Y] = meshgrid(paramSets{i}{1}, paramSets{i}{2});
-    surf(X, Y, vol{i}');
+    surf(X, Y, wVol{i}');
 end
 
 xlabel("Link 1 Length");
 ylabel("Link 2 + Link 3 Length");
-zlabel("Gamut Envelope Volume");
+zlabel("Gamut Envelope Weighted Volume");
 
-saveas(gcf, 'output/gamut_rpr.png');
+set(gcf, 'Position', [0 0 1000 1000]);
+saveas(gcf, 'output/optimization.png');
 
 optLens = [opt(1), len2, opt(2) - len2];
 
 disp("Optimal link lengths:");
 disp(optLens);
 
-save('output/optimization_data.mat', 'vol', 'paramSets', 'optLens', 'maxVolume');
+save('output/optimization_data.mat', 'wVol', 'paramSets', 'optLens', 'maxwVolume');

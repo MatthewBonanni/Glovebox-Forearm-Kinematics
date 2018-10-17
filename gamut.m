@@ -1,6 +1,8 @@
-function [endpts, bound, vol] = gamut(arm, gbox, resolution)
+function [endpts, bound, vol, wVol] = gamut(arm, gbox, resolution)
 %GAMUT Compute gamut of given arm model in the given glove gbox
 %   arm - ValkArm model of robotic arm
+
+shrink = 0.7; % Shrink factor for boundary envelope
 
 rbt = arm.rbt;
 
@@ -69,6 +71,7 @@ endpts = endpts(endpts(:,2) > 0,:); % remove points behind front wall
 endpts = endpts(endpts(:,2) < gbox.d,:); % remove points past rear wall
 endpts = endpts(endpts(:,3) > -gbox.floor,:); % remove points below floor
 
-[bound, vol] = boundary(endpts, 0.7); % determine boundary - maximum shrink
+[bound, vol] = boundary(endpts, shrink); % determine boundary
+[~, wVol] = boundary(weight(endpts, gbox), shrink); % determine weighted volume
 
 end

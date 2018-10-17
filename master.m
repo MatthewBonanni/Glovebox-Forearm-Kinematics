@@ -23,7 +23,7 @@ rpr.red = red;
 rpr.lens = [0 0 0 0 0.155 0 0.082 0.250];
 rpr.dias = [0 0 0 0 0.100 0 0.100 0.100];
 rpr.rbt = def_rpr(rpr.lens, rpr.red);
-[rpr.endpts, rpr.bound, rpr.vol] = gamut(rpr, gbox, resolution);
+[rpr.endpts, rpr.bound, rpr.vol, rpr.wVol] = gamut(rpr, gbox, resolution);
 disp("DONE: RPR");
 disp(strcat("RPR envelope volume: ", num2str(rpr.vol * 10^6), " cm^3"));
 
@@ -35,7 +35,7 @@ old.red = red;
 old.lens = [0 0 0 0 0.23 0 0.07 0];
 old.dias = [0 0 0 0 0.135 0 0.09 0];
 old.rbt = def_old(old.lens, old.red);
-[old.endpts, old.bound, old.vol] = gamut(old, gbox, resolution);
+[old.endpts, old.bound, old.vol, old.wVol] = gamut(old, gbox, resolution);
 disp("DONE: Old");
 disp(strcat("Old envelope volume: ", num2str(old.vol * 10^6), " cm^3"));
 

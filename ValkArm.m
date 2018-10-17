@@ -10,6 +10,7 @@ classdef ValkArm
         endpts
         bound
         vol
+        wVol
         red
     end
     
