@@ -8,4 +8,3 @@ axis equal;
 set(gcf, 'Position', [0 0 1000 1000]);
 
 end
-

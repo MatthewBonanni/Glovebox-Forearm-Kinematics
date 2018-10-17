@@ -106,17 +106,8 @@ for i = 1:zoomCount
     is_end = 0;
 end
 
-for i = 1:zoomCount
-    [X,Y] = meshgrid(paramSets{i}{1}, paramSets{i}{2});
-    surf(X, Y, wVol{i}');
-end
+plot_optimization(paramSets, wVol);
 
-xlabel("Link 1 Length");
-ylabel("Link 2 + Link 3 Length");
-zlabel("Gamut Envelope Weighted Volume");
-
-view(-37.5, 30);
-set(gcf, 'Position', [0 0 1000 1000]);
 saveas(gcf, 'output/optimization.png');
 
 optLens = [opt(1), len2, opt(2) - len2];
