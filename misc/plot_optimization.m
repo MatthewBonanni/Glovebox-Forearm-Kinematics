@@ -14,7 +14,7 @@ ylabel("Link 2 + Link 3 Length");
 zlabel("Gamut Envelope Weighted Volume");
 
 view(-37.5, 30);
-set(gcf, 'Position', [0 0 1000 1000]);
+set(gcf, 'Position', [0 0 500 500]);
 
 end
 

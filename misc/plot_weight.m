@@ -14,7 +14,12 @@ inPts = [x' y' z'];
 
 outPts = weight(inPts, gbox);
 
-plot(inPts(:,3), outPts(:,3) ./ inPts(:,3), 'b-', 'LineWidth', 3);
+oldHeight = inPts(:,3) + gbox.floor;
+newHeight = outPts(:,3) + gbox.floor;
 
-xlabel("Z Position");
+w = newHeight ./ oldHeight;
+
+plot(oldHeight, w, 'b-', 'LineWidth', 3);
+
+xlabel("Height from Floor (m)");
 ylabel("Weight");
