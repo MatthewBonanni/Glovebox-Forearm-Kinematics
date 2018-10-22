@@ -1,6 +1,6 @@
 % MASTER SCRIPT
 
-addpath("models", "output");
+addpath("models", "output", "misc");
 
 resolution = 15; % step count
 red = 1; % reduced complexity models
@@ -20,8 +20,8 @@ gbox.t_collar = 0.02;
 disp("Calculating RPR Gamut...");
 rpr = ValkArm;
 rpr.red = red;
-rpr.lens = [0 0 0 0 0.155 0 0.082 0.250];
-rpr.dias = [0 0 0 0 0.100 0 0.100 0.100];
+rpr.lens = [0 0 0 0 0.225 0 0.077 0.247];
+rpr.dias = [0 0 0 0 0.077 0 0.069 0.070];
 rpr.rbt = def_rpr(rpr.lens, rpr.red);
 [rpr.endpts, rpr.bound, rpr.vol, rpr.wVol] = gamut(rpr, gbox, resolution);
 disp("DONE: RPR");
@@ -32,7 +32,7 @@ disp("");
 disp("Calculating Old Gamut...");
 old = ValkArm;
 old.red = red;
-old.lens = [0 0 0 0 0.23 0 0.07 0];
+old.lens = [0 0 0 0 0.295 0 0.07 0];
 old.dias = [0 0 0 0 0.135 0 0.09 0];
 old.rbt = def_old(old.lens, old.red);
 [old.endpts, old.bound, old.vol, old.wVol] = gamut(old, gbox, resolution);

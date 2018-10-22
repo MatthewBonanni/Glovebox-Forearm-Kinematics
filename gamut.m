@@ -31,6 +31,8 @@ is_end = 0;
 % Loop through all positions
 while ~is_end
     
+    disp(pos);
+    
     % Set all joint positions
     for i = 1:numActs
         config(i).JointPosition = posArrays{i}(pos(i));

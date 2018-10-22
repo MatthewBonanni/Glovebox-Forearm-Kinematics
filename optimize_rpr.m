@@ -13,7 +13,7 @@ gbox.t_collar = 0.02;
 %% Model performance parameters
 
 res_optimization = 10;
-res_model = 10 ;
+res_model = 10;
 zoomCount = 3;
 shrink = 0.5;
 
