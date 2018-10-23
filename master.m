@@ -20,7 +20,7 @@ gbox.t_collar = 0.02;
 disp("Calculating RPR Gamut...");
 rpr = ValkArm;
 rpr.red = red;
-rpr.lens = [0 0 0 0 0.225 0 0.077 0.247];
+rpr.lens = [0 0 0 0 0.225 0 0.080 0.175];
 rpr.dias = [0 0 0 0 0.077 0 0.069 0.070];
 rpr.rbt = def_rpr(rpr.lens, rpr.red);
 [rpr.endpts, rpr.bound, rpr.vol, rpr.wVol] = gamut(rpr, gbox, resolution);

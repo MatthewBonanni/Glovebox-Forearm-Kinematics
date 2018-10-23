@@ -10,10 +10,10 @@ YHbaseToPalm = 0.075;
 
 % Measured from elbow
 
-m_act1 = 0.370;
-l_act1_COM = 0.03 + elbowToPlate;
+m_act1 = 0.478;
+l_act1_COM = 0.033 + elbowToPlate;
 
-m_link1 = 0.153;
+m_link1 = 0.103;
 l_link1_COM = (lens(1) - elbowToPlate - plateToAct1) / 2 + plateToAct1 + elbowToPlate;
 
 m_act2 = 0.135;
@@ -21,13 +21,13 @@ l_act2_COM = lens(1) - 0.016;
 
 % Measured from pitch axis
 
-m_link2 = 0.064;
-l_link2_COM = lens(2) - 0.055;
+m_link2 = 0.051;
+l_link2_COM = lens(1) + 0.024;
 
-m_act3 = 0.082;
-l_act3_COM = lens(2) - 0.021;
+m_act3 = 0.297;
+l_act3_COM = lens(2) - 0.007;
 
-m_link3 = 0.289;
+m_link3 = 0.045;
 l_link3_COM = (lens(3) - YHbaseToPalm) / 2;
 
 m_hand = 0.740;
@@ -36,9 +36,9 @@ l_hand_COM = lens(3) - (YHbaseToPalm / 2);
 m_payload = 0;
 l_payload = lens(3);
 
-Tmax_act1 = 3;
-Tmax_act2 = 3;
-Tmax_act3 = 1.25;
+Tmax_act1 = 1.2;
+Tmax_act2 = 1.2;
+Tmax_act3 = 0.5;
 
 T_required = m_act3 * g * l_act3_COM + ...
              m_link3 * g * l_link3_COM + ...
