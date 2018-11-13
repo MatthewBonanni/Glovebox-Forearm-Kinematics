@@ -1,4 +1,4 @@
-addpath("models", "output");
+addpath("models", "output", "misc");
 
 gbox.w = 1.16;
 gbox.d = 0.74;
@@ -9,13 +9,13 @@ gbox.d_collar = 0.2;
 gbox.t_collar = 0.02;
 
 arm = ValkArm;
-arm.red = 1;
+arm.red = 0;
 
 % arm.lens = [0 0 0 0 0.155 0 0.05 0.163];
 % arm.dias = [0 0 0 0 0.100 0 0.100 0.100];
 
-arm.lens = [0 0 0 0 0.23 0 0.07 0];
-arm.dias = [0 0 0 0 0.135 0 0.09 0];
+arm.lens = [0 0 0 0 0.225 0 0.080 0.175];
+arm.dias = [0 0 0 0 0.077 0 0.069 0.070];
 
 arm.rbt = def_old(arm.lens, arm.red);
 
@@ -46,9 +46,9 @@ if arm.red
     config(2).JointPosition = deg2rad(40) + bAct3.HomePosition;
     config(3).JointPosition = deg2rad(15) + act2.HomePosition;
 else
-    config(1).JointPosition = -0.1 + bAct2.HomePosition;
-    config(2).JointPosition = deg2rad(10) + bAct3.HomePosition;
-    config(3).JointPosition = deg2rad(10) + bAct4.HomePosition;
+    config(1).JointPosition = -0.07 + bAct2.HomePosition;
+    config(2).JointPosition = deg2rad(20) + bAct3.HomePosition;
+    config(3).JointPosition = deg2rad(20) + bAct4.HomePosition;
     config(4).JointPosition = deg2rad(-30) + act1.HomePosition;
     config(5).JointPosition = deg2rad(30) + act2.HomePosition;
     config(6).JointPosition = deg2rad(30) + act3.HomePosition;
