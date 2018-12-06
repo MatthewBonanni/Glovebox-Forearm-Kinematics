@@ -32,7 +32,7 @@ disp("");
 disp("Calculating Old Gamut...");
 old = ValkArm;
 old.red = red;
-old.lens = [0 0 0 0 0.295 0 0.07 0];
+old.lens = [0 0 0 0 0.295 0 0.068 0];
 old.dias = [0 0 0 0 0.135 0 0.09 0];
 old.rbt = def_old(old.lens, old.red);
 [old.endpts, old.bound, old.vol, old.wVol] = gamut(old, gbox, resolution);

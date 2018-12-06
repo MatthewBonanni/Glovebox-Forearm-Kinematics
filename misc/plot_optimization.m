@@ -9,8 +9,8 @@ for i = 1:length(wVol)
     surf(X, Y, wVol{i}');
 end
 
-xlabel("Link 1 Length");
-ylabel("Link 2 + Link 3 Length");
+xlabel("Link 1 Length (m)");
+ylabel("Link 2 + Link 3 Length (m)");
 zlabel("Gamut Envelope Weighted Volume");
 
 view(-37.5, 30);
